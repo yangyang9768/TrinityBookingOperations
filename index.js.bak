@@ -1,0 +1,35 @@
+const puppeteer = require('puppeteer');
+import EventPage from './src/eventbrite-rpa/views/EventPage';
+
+let slot = {
+    id: '124272685949',
+    url: 'https://www.eventbrite.ie/e/student-online-classstudy-spaces-and-computer-labs-tickets-124272685949',
+    startLocal: '2020-11-30T13:00:00',
+    availability: {
+        'Áras an Phiarsaigh, Computer Room (PC)': 'Available',
+        'Beckett 1 PC': 'Unavailable',
+        'Beckett 2 iMac': 'Available',
+        'EE1 PC': 'Available',
+        'EE2 PC': 'Unavailable',
+        'EE3 PC': 'Unavailable',
+        'EE4 iMac': 'Available'
+    }
+};
+
+function delay(time) {
+    return new Promise(function (resolve) {
+        setTimeout(resolve, time)
+    });
+}
+
+(async () => {
+    const browser = await puppeteer.launch({
+        headless: false, args: ['--disable-web-security', '--disable-features=IsolateOrigins,site-per-process']
+    });
+    const page = await browser.newPage();
+    await page.goto(slot.url);
+    let event = new EventPage(page, slot.id);
+    let availability = await event.getVenueAvailability();
+    console.log(availability);
+    await browser.close();
+})();
