@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 // import EventPage from './src/eventbrite-rpa/views/EventPage';
 
+## get event ID through EventBrite Api
 let events = `135168234829
 135168236835
 135168238841
@@ -48,13 +49,15 @@ function delay(time) {
     // login
     await page.goto("https://www.eventbrite.ie/signin/");
     await page.waitForSelector("#email");
-    await page.type('#email', 'xuch@tcd.ie');
+    ## enter your email
+    await page.type('#email', '');
     await Promise.all([
         page.waitForNavigation(),
         page.click("#root > div > div.eds-structure__body > div > div > div > div.eds-fixed-bottom-bar-layout__content > div > main > div > div > div > div:nth-child(2) > form > div:nth-child(2) > button")
     ]);
     await page.waitForSelector("#password");
-    await page.type('#password', 'GSUbooking2020');
+    ## enter your password
+    await page.type('#password', '');
     await Promise.all([
         page.waitForNavigation(), // The promise resolves after navigation has finished
         page.click("#root > div > div.eds-structure__body > div > div > div > div.eds-fixed-bottom-bar-layout__content > div > main > div > div > div > div.eds-fx--fade-in.eds-fx--delay-2 > form > div.eds-fx--fade-in-down.eds-fx--delay-1.eds-l-mar-top-6 > button")
